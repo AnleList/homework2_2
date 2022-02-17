@@ -1,21 +1,18 @@
 package ru.netology.hw2_2
 
-import ru.netology.hw2_2.donut.Donut
-
 object WallService {
     private var posts = emptyArray<Post>()
 
     fun add(post: Post): Post {
-        val postWithID: Post = post.copy(id = posts.size)
-        posts += postWithID
+        posts += post.copy(id = posts.size)
         return posts.last()
     }
 
-    fun update (post: Post): Boolean {
+    fun updateByID (post: Post): Boolean {
         var isPostUpdated = false
-        for ((index, postWithID) in posts.withIndex())
-            if (postWithID.id == post.id) {
-                posts[index] = postWithID.copy(
+        for ((index, arrPost) in posts.withIndex())
+            if (arrPost.id == post.id) {
+                posts[index] = arrPost.copy(
                     fromId = post.fromId,
                     createdBy = post.createdBy,
                     text = post.text,
