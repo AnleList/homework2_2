@@ -1,6 +1,7 @@
 package ru.netology.hw2_2
 
 import ru.netology.hw2_2.donut.Donut
+import ru.netology.hw2_2.geo.Geo
 
 data class Post(
     val id: Int?,
@@ -19,7 +20,9 @@ data class Post(
     val views: Views,
     val postType: String, //post, copy, reply, postpone, suggest
     val postSource: PostSource,
+    val geo: Geo,
     val signerId: Int,
+    val copyHistory: Array<Post>?,
     val canPin: Boolean,
     val canDelete: Boolean,
     val canEdit: Boolean,
