@@ -5,9 +5,23 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import ru.netology.hw2_2.donut.Donut
-import ru.netology.hw2_2.donut.Placeholder
+import ru.netology.hw2_2.donut.placeholder.Placeholder
+import ru.netology.hw2_2.geo.Geo
+import ru.netology.hw2_2.geo.place.Place
 
 class WallServiceTest {
+
+    private val testGeo = Geo (
+        type = "",
+        coordinates = "",
+        place = null
+            )
+    private val testPostSource = PostSource(
+        type = "",
+        platform = "",
+        data = "",
+        url = ""
+    )
     private val testComments = Comments (
         count = 0,
         canPost = false,
@@ -49,6 +63,7 @@ class WallServiceTest {
         createdBy = 0,
         date = 0,
         text = "",
+        reply_owner_id = 0,
         replyPostId = 0,
         friendsOnly = true,
         comments = testComments,
@@ -57,7 +72,10 @@ class WallServiceTest {
         reposts = testReposts,
         views = testViews,
         postType = "post", //post, copy, reply, postpone, suggest
+        postSource = testPostSource,
+        geo = testGeo,
         signerId = 0,
+        copyHistory = null,
         canPin = false,
         canDelete = false,
         canEdit = false,
