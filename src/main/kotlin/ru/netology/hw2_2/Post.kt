@@ -18,6 +18,7 @@ data class Post(
     val reposts: Reposts,
     val views: Views,
     val postType: String, //post, copy, reply, postpone, suggest
+    val postSource: PostSource,
     val signerId: Int,
     val canPin: Boolean,
     val canDelete: Boolean,
