@@ -1,4 +1,4 @@
-package ru.netology.hw2_2.geo.place
+package ru.netology.hw2_2.geo
 
 data class Place(
     val id: Int,

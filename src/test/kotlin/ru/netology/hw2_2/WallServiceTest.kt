@@ -4,10 +4,8 @@ import org.junit.Test
 
 
 import org.junit.Assert.*
-import ru.netology.hw2_2.donut.Donut
-import ru.netology.hw2_2.donut.placeholder.Placeholder
+import ru.netology.hw2_2.enumClasses.*
 import ru.netology.hw2_2.geo.Geo
-import ru.netology.hw2_2.geo.place.Place
 
 class WallServiceTest {
 
@@ -17,9 +15,9 @@ class WallServiceTest {
         place = null
             )
     private val testPostSource = PostSource(
-        type = "",
-        platform = "",
-        data = "",
+        type = PostSource_type.vk,
+        platform = PostSource_platform.android,
+        data = PostSource_data.poll,
         url = ""
     )
     private val testComments = Comments (
@@ -48,16 +46,16 @@ class WallServiceTest {
     private val testViews = Views (
         count = 0
             )
-    private val testPlaceholder = Placeholder ()
+    private val testPlaceholder = 0
     private val testDonut = Donut(
         false,
         0,
         testPlaceholder,
         false,
-        "duration"
+        Donut_editMode.all
             )
     private val testPost = Post(
-        id = null,
+        id = 0,
         ownerId = 0,
         fromId = 0,
         createdBy = 0,
@@ -71,7 +69,7 @@ class WallServiceTest {
         likes = testLikes,
         reposts = testReposts,
         views = testViews,
-        postType = "post", //post, copy, reply, postpone, suggest
+        postType = Post_postType.post, //post, copy, reply, postpone, suggest
         postSource = testPostSource,
         geo = testGeo,
         signerId = 0,
@@ -90,7 +88,6 @@ class WallServiceTest {
     fun add() {
         assertEquals("just added post text",
             (WallService.add(testPost.copy(text = "just added post text"))).text)
-        assertTrue((WallService.add(testPost).id) != null)
     }
 
     @Test
@@ -102,6 +99,6 @@ class WallServiceTest {
     @Test
     fun updateFalse() {
         WallService.add(testPost)
-        assertFalse(WallService.updateByID(testPost.copy(id = null)))
+        assertFalse(WallService.updateByID(testPost.copy(id = 0)))
     }
 }

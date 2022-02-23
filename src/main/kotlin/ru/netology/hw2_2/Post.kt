@@ -1,10 +1,10 @@
 package ru.netology.hw2_2
 
-import ru.netology.hw2_2.donut.Donut
+import ru.netology.hw2_2.enumClasses.Post_postType
 import ru.netology.hw2_2.geo.Geo
 
 data class Post(
-    val id: Int?,
+    val id: Int = 0,
     val ownerId: Int,
     val fromId: Int,
     val createdBy: Int,
@@ -18,7 +18,7 @@ data class Post(
     val likes: Likes,
     val reposts: Reposts,
     val views: Views,
-    val postType: String, //post, copy, reply, postpone, suggest
+    val postType: Post_postType, //post, copy, reply, postpone, suggest
     val postSource: PostSource,
     val geo: Geo,
     val signerId: Int,
