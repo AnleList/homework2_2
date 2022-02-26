@@ -87,19 +87,31 @@ class WallServiceTest {
 
     @Test
     fun add() {
-        assertEquals("just added post text",
-            (WallService.add(testPost.copy(text = "just added post text"))).text)
+        val addTestPost = testPost
+
+        val addTestResult = WallService.add(addTestPost)
+
+        assertNotEquals(0, addTestResult.id)
     }
 
     @Test
     fun updateTrue() {
-        WallService.add(testPost)
-        assertTrue(WallService.update(testPost.copy(id = 0, text = "test text")))
+        val updateTrueTestPost =
+            WallService.add(testPost.copy(text = "test text"))
+
+        val updateTrueTestResult = WallService.update(updateTrueTestPost)
+
+        assertTrue(updateTrueTestResult)
     }
 
     @Test
     fun updateFalse() {
-        WallService.add(testPost)
-        assertFalse(WallService.update(testPost.copy(id = 0)))
+        val updateFalseTestPost = WallService.add(testPost)
+
+        val updateFalseTestResult =
+            WallService.update(updateFalseTestPost.copy(id =
+            updateFalseTestPost.id + 1))
+
+        assertFalse(updateFalseTestResult)
     }
 }
