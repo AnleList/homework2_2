@@ -84,6 +84,7 @@ class WallServiceTest {
         postponedId = 0
     )
 
+
     @Test
     fun add() {
         assertEquals("just added post text",
@@ -93,12 +94,12 @@ class WallServiceTest {
     @Test
     fun updateTrue() {
         WallService.add(testPost)
-        assertTrue(WallService.updateByID(testPost.copy(id = 0, text = "test text")))
+        assertTrue(WallService.update(testPost.copy(id = 0, text = "test text")))
     }
 
     @Test
     fun updateFalse() {
         WallService.add(testPost)
-        assertFalse(WallService.updateByID(testPost.copy(id = 0)))
+        assertFalse(WallService.update(testPost.copy(id = 0)))
     }
 }
