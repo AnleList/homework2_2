@@ -94,8 +94,7 @@ class WallServiceTest {
 
     @Test
     fun updateTrue() {
-        val testPost =
-            WallService.add(testPost)
+        val testPost = WallService.add(testPost)
 
         val updateTrueTestResult = WallService.update(testPost)
 
@@ -107,7 +106,7 @@ class WallServiceTest {
         val testPost = WallService.add(testPost)
 
         val updateFalseTestResult =
-            WallService.update(testPost.copy(id = testPost.id + 1))
+            WallService.update(testPost.copy(id = 0))
 
         assertFalse(updateFalseTestResult)
     }

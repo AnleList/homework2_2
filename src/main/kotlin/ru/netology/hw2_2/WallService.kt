@@ -8,7 +8,7 @@ object WallService {
         if (lastPostID != 0) lastPostID += 1 else lastPostID = 1
         val nextId =  lastPostID
         val identifiedPost = post.copy(id = nextId)
-        posts += post
+        posts += identifiedPost
         return identifiedPost
     }
 
