@@ -1,8 +1,5 @@
 package ru.netology.hw2_2
 
-import ru.netology.hw2_2.enumClasses.Post_postType
-import ru.netology.hw2_2.geo.Geo
-
 data class Post(
     val id: Int = 0,
     val ownerId: Int,
@@ -18,7 +15,7 @@ data class Post(
     val likes: Likes,
     val reposts: Reposts,
     val views: Views,
-    val postType: Post_postType, //post, copy, reply, postpone, suggest
+    val postType: PostType,
     val postSource: PostSource,
     val geo: Geo,
     val signerId: Int,
@@ -31,4 +28,8 @@ data class Post(
     val isFavorite: Boolean,
     val donut: Donut,
     val postponedId: Int
-    )
+    ) {
+    enum class PostType {
+        POST, COPY, REPLY, POSTPONE, SUGGEST
+    }
+}

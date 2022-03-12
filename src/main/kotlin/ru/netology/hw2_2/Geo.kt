@@ -1,4 +1,4 @@
-package ru.netology.hw2_2.geo
+package ru.netology.hw2_2
 
 data class Geo(
     val type: String,

@@ -4,8 +4,6 @@ import org.junit.Test
 
 
 import org.junit.Assert.*
-import ru.netology.hw2_2.enumClasses.*
-import ru.netology.hw2_2.geo.Geo
 
 class WallServiceTest {
 
@@ -15,9 +13,9 @@ class WallServiceTest {
         place = null
             )
     private val testPostSource = PostSource(
-        type = PostSource_type.vk,
-        platform = PostSource_platform.android,
-        data = PostSource_data.poll,
+        type = PostSource.PostSource_type.VK,
+        platform = PostSource.PostSource_platform.ANDROID,
+        data = PostSource.PostSource_data.POLL,
         url = ""
     )
     private val testComments = Comments (
@@ -52,7 +50,7 @@ class WallServiceTest {
         0,
         testPlaceholder,
         false,
-        Donut_editMode.all
+        Donut.Donut_editMode.ALL
             )
     private val testPost = Post(
         id = 0,
@@ -69,7 +67,7 @@ class WallServiceTest {
         likes = testLikes,
         reposts = testReposts,
         views = testViews,
-        postType = Post_postType.post, //post, copy, reply, postpone, suggest
+        postType = Post.PostType.POST,
         postSource = testPostSource,
         geo = testGeo,
         signerId = 0,

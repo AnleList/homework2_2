@@ -1,12 +1,19 @@
 package ru.netology.hw2_2
 
-import ru.netology.hw2_2.enumClasses.PostSource_data
-import ru.netology.hw2_2.enumClasses.PostSource_type
-import ru.netology.hw2_2.enumClasses.PostSource_platform
-
 data class PostSource(
-    val type: PostSource_type, //vk, widget, api ,rss ,sms
-    val platform: PostSource_platform, //android, iphone, wphone
-    val data: PostSource_data, //profile_activity, profile_photo, comments, like, poll
+    val type: PostSource_type,
+    val platform: PostSource_platform,
+    val data: PostSource_data,
     val url: String,
-)
+) {
+    enum class PostSource_type {
+        VK, WIDGET, API ,RSS, SMS
+    }
+    enum class PostSource_platform {
+        ANDROID, IPHONE, WPHONE
+    }
+    enum class PostSource_data {
+        PROFILE_ACTIVITY, PROFILE_PHOTO, COMMENTS, LIKE, POLL
+    }
+
+}
