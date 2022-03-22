@@ -13,9 +13,9 @@ class WallServiceTest {
         place = null
             )
     private val testPostSource = PostSource(
-        type = PostSource.PostSource_type.VK,
-        platform = PostSource.PostSource_platform.ANDROID,
-        data = PostSource.PostSource_data.POLL,
+        type = PostSource.Type.VK,
+        platform = PostSource.Platform.ANDROID,
+        data = PostSource.Data.POLL,
         url = ""
     )
     private val testComments = Comments (
@@ -35,7 +35,7 @@ class WallServiceTest {
         count = 0,
         userLikes = false,
         canLike = false,
-        can_publish = false
+        canPublish = false
             )
     private val testReposts = Reposts (
         count = 0,
@@ -50,7 +50,7 @@ class WallServiceTest {
         0,
         testPlaceholder,
         false,
-        Donut.Donut_editMode.ALL
+        Donut.Mode.ALL
             )
     private val testPost = Post(
         id = 0,
@@ -67,7 +67,7 @@ class WallServiceTest {
         likes = testLikes,
         reposts = testReposts,
         views = testViews,
-        postType = Post.PostType.POST,
+        postType = Post.Type.POST,
         postSource = testPostSource,
         geo = testGeo,
         signerId = 0,

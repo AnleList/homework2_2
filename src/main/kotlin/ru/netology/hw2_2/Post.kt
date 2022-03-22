@@ -15,7 +15,7 @@ data class Post(
     val likes: Likes,
     val reposts: Reposts,
     val views: Views,
-    val postType: PostType,
+    val postType: Type,
     val postSource: PostSource,
     val geo: Geo,
     val signerId: Int,
@@ -29,7 +29,7 @@ data class Post(
     val donut: Donut,
     val postponedId: Int
     ) {
-    enum class PostType {
+    enum class Type {
         POST, COPY, REPLY, POSTPONE, SUGGEST
     }
 }

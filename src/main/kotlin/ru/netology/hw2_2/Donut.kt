@@ -5,9 +5,9 @@ data class Donut(
     val paidDuration: Int,
     val placeholder: Any,
     val canPublishFreeCopy: Boolean,
-    val editMode: Donut_editMode,
+    val editMode: Mode,
 ) {
-    enum class Donut_editMode {
+    enum class Mode {
         ALL, DURATION
     }
 }
