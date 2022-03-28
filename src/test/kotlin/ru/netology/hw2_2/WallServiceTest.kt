@@ -59,7 +59,7 @@ class WallServiceTest {
         createdBy = 0,
         date = 0,
         text = "",
-        reply_owner_id = 0,
+        replyOwnerId = 0,
         replyPostId = 0,
         friendsOnly = true,
         comments = testComments,

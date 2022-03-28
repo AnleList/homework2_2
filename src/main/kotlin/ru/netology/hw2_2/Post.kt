@@ -7,7 +7,7 @@ data class Post(
     val createdBy: Int,
     val date: Int,
     val text: String,
-    val reply_owner_id: Int,
+    val replyOwnerId: Int,
     val replyPostId: Int,
     val friendsOnly: Boolean,
     val comments: Comments,
