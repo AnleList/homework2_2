@@ -69,6 +69,7 @@ class WallServiceTest {
         views = testViews,
         postType = Post.Type.POST,
         postSource = testPostSource,
+        attachments = null,
         geo = testGeo,
         signerId = 0,
         copyHistory = null,
