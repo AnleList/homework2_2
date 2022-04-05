@@ -1,2 +1,3 @@
-rootProject.name = 'homework2_2'
+rootProject.name = 'homeworkKotlin'
+include 'untitled'
 

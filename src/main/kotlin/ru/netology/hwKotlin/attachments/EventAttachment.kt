@@ -1,6 +1,6 @@
-package ru.netology.hw2_2.attachments
+package ru.netology.hwKotlin.attachments
 
-import ru.netology.hw2_2.Attachment
+import ru.netology.hwKotlin.Attachment
 
 data class EventAttachment(
     override val type: String,

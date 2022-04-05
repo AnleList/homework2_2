@@ -1,4 +1,4 @@
-package ru.netology.hw2_2
+package ru.netology.hwKotlin
 
 data class Likes(
     val count: Int,
