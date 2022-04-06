@@ -33,6 +33,4 @@ object WallService {
                 throw PostNotFoundException("no post for added comment")
         }
     }
-
-    class PostNotFoundException (message: String): RuntimeException(message)
 }

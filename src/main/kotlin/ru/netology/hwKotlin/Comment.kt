@@ -9,7 +9,7 @@ data class Comment(
     val donut: Donut,
     val replyToUser: Int,
     val replyToComment: Int,
-    val attachments: Any,
+    val attachments: Any?,
     val parentsStack: Array<Comment>?,
-    val thread: Any
+    val thread: Any?
 )
