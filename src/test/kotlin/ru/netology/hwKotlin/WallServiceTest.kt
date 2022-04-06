@@ -37,7 +37,7 @@ class WallServiceTest {
         canLike = false,
         canPublish = false
             )
-    private val testReposts = Reposts (
+    private val testRepost = Repost (
         count = 0,
         userReposted = false
             )
@@ -65,7 +65,7 @@ class WallServiceTest {
         comments = testComments,
         copyright = testCopyright,
         likes = testLikes,
-        reposts = testReposts,
+        repost = testRepost,
         views = testViews,
         postType = Post.Type.POST,
         postSource = testPostSource,

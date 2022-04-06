@@ -13,7 +13,7 @@ data class Post(
     val comments: Comments,
     val copyright: Copyright?,
     val likes: Likes,
-    val reposts: Reposts,
+    val repost: Repost,
     val views: Views,
     val postType: Type,
     val postSource: PostSource,
