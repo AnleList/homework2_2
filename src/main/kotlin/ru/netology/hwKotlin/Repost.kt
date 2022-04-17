@@ -1,6 +1,6 @@
-package ru.netology.hw2_2
+package ru.netology.hwKotlin
 
-data class Reposts(
+data class Repost(
     val count: Int,
     val userReposted: Boolean,
 )

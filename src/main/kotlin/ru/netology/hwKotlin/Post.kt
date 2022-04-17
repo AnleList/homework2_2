@@ -1,4 +1,4 @@
-package ru.netology.hw2_2
+package ru.netology.hwKotlin
 
 data class Post(
     val id: Int = 0,
@@ -13,7 +13,7 @@ data class Post(
     val comments: Comments,
     val copyright: Copyright?,
     val likes: Likes,
-    val reposts: Reposts,
+    val repost: Repost,
     val views: Views,
     val postType: Type,
     val postSource: PostSource,

@@ -1,8 +1,9 @@
-package ru.netology.hw2_2
+package ru.netology.hwKotlin
 
 object WallService {
     private var posts = emptyArray<Post>()
     private var lastPostID = 0
+    private var comments = emptyArray<Comment>()
 
     fun add(post: Post): Post {
         if (lastPostID != 0) lastPostID += 1 else lastPostID = 1
@@ -19,5 +20,17 @@ object WallService {
                 return true
             }
         return false
+    }
+
+    fun createComment(comment: Comment) {
+        var isTherePostIdInPosts = false
+        for (arrPost in posts)
+            if (arrPost.id == comment.postId) {
+                comments += comment
+                isTherePostIdInPosts = true
+            }
+        if (!isTherePostIdInPosts) {
+                throw PostNotFoundException("no post for added comment")
+        }
     }
 }

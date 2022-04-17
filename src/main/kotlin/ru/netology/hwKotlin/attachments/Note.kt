@@ -1,4 +1,4 @@
-package ru.netology.hw2_2.attachments
+package ru.netology.hwKotlin.attachments
 
 interface Note {
     val id: Int

@@ -1,4 +1,4 @@
-package ru.netology.hw2_2
+package ru.netology.hwKotlin
 
 import org.junit.Test
 
@@ -37,7 +37,7 @@ class WallServiceTest {
         canLike = false,
         canPublish = false
             )
-    private val testReposts = Reposts (
+    private val testRepost = Repost (
         count = 0,
         userReposted = false
             )
@@ -65,7 +65,7 @@ class WallServiceTest {
         comments = testComments,
         copyright = testCopyright,
         likes = testLikes,
-        reposts = testReposts,
+        repost = testRepost,
         views = testViews,
         postType = Post.Type.POST,
         postSource = testPostSource,
@@ -82,6 +82,20 @@ class WallServiceTest {
         donut = testDonut,
         postponedId = 0
     )
+
+    private val testComment = Comment (
+    id = 1,
+    fromID = 1,
+    postId = 1,
+    date = 1,
+    text = " ",
+    donut = testDonut,
+    replyToUser = 1,
+    replyToComment = 1,
+    attachments = null,
+    parentsStack = null,
+    thread = null
+            )
 
 
     @Test
@@ -110,5 +124,15 @@ class WallServiceTest {
             WallService.update(testPost.copy(id = 0))
 
         assertFalse(updateFalseTestResult)
+    }
+
+    @Test
+    fun shouldAddComment() {
+        WallService.createComment(testComment)
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        WallService.createComment(testComment.copy(postId = 0))
     }
 }
