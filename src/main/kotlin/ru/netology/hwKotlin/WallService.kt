@@ -25,12 +25,12 @@ object WallService {
     fun createComment(comment: Comment) {
         var isTherePostIdInPosts = false
         for (arrPost in posts)
-            if (arrPost.id == comment.postId) {
+            if (arrPost.id == comment.targetId) {
                 comments += comment
                 isTherePostIdInPosts = true
             }
         if (!isTherePostIdInPosts) {
-                throw PostNotFoundException("no post for added comment")
+                throw TargetNotFoundException("there is no post for the comment being added now")
         }
     }
 }

@@ -84,17 +84,17 @@ class WallServiceTest {
     )
 
     private val testComment = Comment (
-    id = 1,
-    fromID = 1,
-    postId = 1,
-    date = 1,
-    text = " ",
-    donut = testDonut,
-    replyToUser = 1,
-    replyToComment = 1,
-    attachments = null,
-    parentsStack = null,
-    thread = null
+        id = 1,
+        fromID = 1,
+        targetId = 1,
+        date = 1,
+        text = " ",
+        donut = testDonut,
+        replyToUser = 1,
+        replyToComment = 1,
+        attachments = null,
+        parentsStack = null,
+        thread = null
             )
 
 
@@ -131,8 +131,8 @@ class WallServiceTest {
         WallService.createComment(testComment)
     }
 
-    @Test(expected = PostNotFoundException::class)
+    @Test(expected = TargetNotFoundException::class)
     fun shouldThrow() {
-        WallService.createComment(testComment.copy(postId = 0))
+        WallService.createComment(testComment.copy(targetId = 0))
     }
 }

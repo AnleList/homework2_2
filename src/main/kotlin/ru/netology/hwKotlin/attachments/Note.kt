@@ -9,4 +9,5 @@ interface Note {
     val comments: Int
     val readComments: Int
     val viewUrl: String
+    var isNoteDeleted: Boolean
 }
