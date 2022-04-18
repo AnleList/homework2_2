@@ -7,7 +7,7 @@ object NoteService {
  private var lastNoteID = 0
  private var notes = mutableListOf<NoteAttachment>()
  private var lastCommentID = 0
- private var comments = emptyList<Comment>()
+ private var comments = mutableListOf<Comment>()
 
  fun add(note: NoteAttachment): NoteAttachment {
   lastNoteID += 1
@@ -30,8 +30,14 @@ object NoteService {
  }
 
  fun delete (noteId: Int) {
-  for (eachNote in notes)
-   if (eachNote.id == noteId)
- //    eachNote = eachNote.copy(isNoteDeleted = true)
+  var isThereNoteIdInNotes = false
+  for ((index, eachNote) in notes.withIndex())
+   if (eachNote.id == noteId){
+    notes[index] = eachNote.copy(isNoteDeleted = true)
+    isThereNoteIdInNotes = true
+   }
+  if (!isThereNoteIdInNotes) {
+   throw TargetNotFoundException("there is no note that should be deleted")
+  }
  }
 }
