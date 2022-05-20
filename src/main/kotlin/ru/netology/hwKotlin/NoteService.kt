@@ -16,17 +16,16 @@ object NoteService {
         return identifiedNote
     }
 
-    fun createComment(comment: Comment) {
-        var isThereCommentNoteIdInNotes = false
+    fun createComment(comment: Comment): Comment {
+        var commentToReturn: Comment? = null
         for (eachNote in notes)
             if (eachNote.id == comment.targetId) {
                 lastCommentID += 1
                 comments += comment.copy(id = lastCommentID)
-                isThereCommentNoteIdInNotes = true
+                commentToReturn = comment.copy(id = lastCommentID)
             }
-        if (!isThereCommentNoteIdInNotes) {
-            throw TargetNotFoundException("there is no Note for the comment that should be added")
-        }
+        return commentToReturn ?:
+        throw TargetNotFoundException("there is no Note to return or no comment with this targetId")
     }
 
     fun delete(note: NoteAttachment) {
@@ -99,16 +98,15 @@ object NoteService {
         return commentsToReturn
     }
 
-    fun restoreComment (commentId: Int) {
-        var isThereCommentIdInComments = false
+    fun restoreComment (commentId: Int): Comment {
+        var commentToReturn: Comment? = null
         for ((index, eachComment) in comments.withIndex())
             if (eachComment.id == commentId) {
                 comments[index] = (comments[index]).copy(isCommentDeleted = false)
-                isThereCommentIdInComments = true
+                commentToReturn = (comments[index]).copy(isCommentDeleted = false)
             }
-        if (!isThereCommentIdInComments) {
-            throw TargetNotFoundException("there is no Comment that should be restore")
-        }
+        return commentToReturn ?:
+        throw TargetNotFoundException("there is no Comment that should be restore")
     }
 
 }

@@ -12,7 +12,6 @@ data class NoteAttachment(
     override val date: Int,
     override val comments: Int,
     override val readComments: Int,
-    override val viewUrl: String,
+    override val viewUrl: String?,
     override var isNoteDeleted: Boolean = false,
-    override var commentsList: List<Comment>,
 ) : Attachment, Note

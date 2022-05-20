@@ -1,8 +1,6 @@
 package ru.netology.hwKotlin
 
 import org.junit.Test
-
-
 import org.junit.Assert.*
 
 class WallServiceTest {
@@ -94,7 +92,8 @@ class WallServiceTest {
         replyToComment = 1,
         attachments = null,
         parentsStack = null,
-        thread = null
+        thread = null,
+        isCommentDeleted = false
             )
 
 

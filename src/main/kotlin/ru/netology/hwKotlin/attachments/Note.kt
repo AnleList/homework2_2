@@ -9,8 +9,7 @@ interface Note {
     val text: String
     val date: Int
     val comments: Int
-    var commentsList: List<Comment>
     val readComments: Int
-    val viewUrl: String
+    val viewUrl: String?
     var isNoteDeleted: Boolean
 }
