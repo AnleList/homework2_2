@@ -11,7 +11,8 @@ data class Comment(
     val replyToComment: Int,
     val attachments: Any?,
     val parentsStack: Array<Comment>?,
-    val thread: Any?
+    val thread: Any?,
+    val isCommentDeleted: Boolean
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
