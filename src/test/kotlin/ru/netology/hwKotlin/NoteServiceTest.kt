@@ -54,8 +54,8 @@ class NoteServiceTest {
 
     @Test
     fun createComment(){
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
 
         val createCommentResult = NoteService.createComment(testComment)
 
@@ -63,8 +63,8 @@ class NoteServiceTest {
     }
     @Test(expected = TargetNotFoundException::class)
     fun createCommentShouldThrow() {
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
 
         NoteService.createComment(testComment.copy(targetId = 0))
     }
@@ -86,16 +86,16 @@ class NoteServiceTest {
 
     @Test
     fun deleteComment(){
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
         val createCommentResult = NoteService.createComment(testComment)
 
         NoteService.deleteComment(createCommentResult)
     }
     @Test(expected = TargetNotFoundException::class)
     fun deleteCommentShouldThrow() {
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
         val createCommentResult = NoteService.createComment(testComment)
 
         NoteService.deleteComment(createCommentResult.copy(id = 0))
@@ -118,16 +118,16 @@ class NoteServiceTest {
 
     @Test
     fun editComment(){
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
         val createCommentResult = NoteService.createComment(testComment)
 
         NoteService.editComment(createCommentResult.copy(text = "some edit text of Comment"))
     }
     @Test(expected = TargetNotFoundException::class)
     fun editCommentShouldThrow() {
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
         val createCommentResult = NoteService.createComment(testComment)
 
         NoteService.editComment(createCommentResult.copy(id = 0))
@@ -163,19 +163,20 @@ class NoteServiceTest {
     @Test
     fun getComments(){
         val addResult = NoteService.add(testNote)
-        val testComment = testComment
+        val testComment = testComment.copy(targetId = addResult.id)
         val createCommentResult = NoteService.createComment(testComment)
 
         val getCommentsResult = NoteService.getComments(addResult)
 
         assertEquals(createCommentResult,
             getCommentsResult.last{it.id == createCommentResult.id})
+        assertEquals(1, getCommentsResult.size)
     }
 
     @Test
     fun restoreComment(){
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
         val createCommentResult = NoteService.createComment(testComment)
         NoteService.deleteComment(createCommentResult)
 
@@ -185,8 +186,8 @@ class NoteServiceTest {
     }
     @Test(expected = TargetNotFoundException::class)
     fun restoreCommentShouldThrow() {
-        NoteService.add(testNote)
-        val testComment = testComment
+        val addResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addResult.id)
         val createCommentResult = NoteService.createComment(testComment)
         NoteService.deleteComment(createCommentResult)
 
