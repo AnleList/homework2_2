@@ -130,6 +130,24 @@ class NoteServiceTest {
     }
 
 
+    @Test
+    fun addComment(){
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+
+        val addCommentTestResult = CommentService.add(testComment)
+
+        assertNotEquals(0L, addCommentTestResult)
+    }
+    @Test(expected = TargetNotFoundException::class)
+    fun addCommentShouldThrow() {
+        NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = 0)
+
+        CommentService.add(testComment)
+    }
+
+
 
 
 

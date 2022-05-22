@@ -3,7 +3,7 @@ package ru.netology.hwKotlin
 data class Comment(
     val id: Long,
     val fromID: Int,
-    val targetId: Int,
+    val targetId: Long,
     val date: Int,
     val text: String,
     val donut: Donut,

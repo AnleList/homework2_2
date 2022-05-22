@@ -7,15 +7,7 @@ object CommentService: CredService<Comment>  {
     private val comments = mutableListOf<Comment>()
 
     fun createComment(comment: Comment): Comment {
-        var commentToReturn: Comment? = null
-        for (eachNote in NoteService.notes)
-            if (eachNote.id == comment.targetId) {
-                NoteService.lastCommentID += 1
-                NoteService.comments += comment.copy(id = NoteService.lastCommentID)
-                commentToReturn = comment.copy(id = NoteService.lastCommentID)
-            }
-        return commentToReturn ?:
-        throw TargetNotFoundException("there is no Note to return or no comment with this targetId")
+
     }
 
     fun deleteComment(comment: Comment) {
@@ -62,8 +54,18 @@ object CommentService: CredService<Comment>  {
         throw TargetNotFoundException("there is no Comment that should be restore")
     }
 
-    override fun add(entity: Comment): Long {
-        TODO("Not yet implemented")
+
+
+    override fun add(comment: Comment): Long {
+        lateinit var identifiedComment: Comment
+        for (eachNote in NoteService.read())
+            if (eachNote.id == comment.targetId) {
+                lastCommentID += 1L
+                identifiedComment = comment.copy(id = lastCommentID)
+                comments += identifiedComment
+            } else
+                throw TargetNotFoundException("there is no comment to return or no comment with this targetId")
+        return identifiedComment.id
     }
 
     override fun delete(id: Long) {
