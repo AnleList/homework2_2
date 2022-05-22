@@ -3,7 +3,7 @@ package ru.netology.hwKotlin.attachments
 import ru.netology.hwKotlin.Comment
 
 interface Note {
-    val id: Int
+    val id: Long
     val ownerID: Int
     val title: String
     val text: String
