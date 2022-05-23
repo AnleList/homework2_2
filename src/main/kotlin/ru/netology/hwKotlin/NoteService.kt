@@ -1,8 +1,10 @@
 package ru.netology.hwKotlin
 
 import ru.netology.hwKotlin.attachments.NoteAttachment
+import ru.netology.hwKotlin.exceptions.TargetDeletedException
+import ru.netology.hwKotlin.exceptions.TargetNotFoundException
 
-object NoteService: CredService<NoteAttachment> {
+object NoteService: CrudService<NoteAttachment> {
 
     private var lastNoteID = 0L
     private val notes = mutableListOf<NoteAttachment>()
@@ -22,20 +24,24 @@ object NoteService: CredService<NoteAttachment> {
                 isThereNoteIdInNotes = true
             }
         if (!isThereNoteIdInNotes) {
-            throw TargetNotFoundException("there is no Note that should be deleted")
+            throw TargetNotFoundException("There is no Note that should be deleted.")
         }
     }
 
     override fun edit(note: NoteAttachment) {
         var isThereNoteIdInNotes = false
+        var isNoteDeleted = true
         for ((index, eachNote) in notes.withIndex())
             if (eachNote.id == note.id) {
-                notes[index] = note
                 isThereNoteIdInNotes = true
+                if (!eachNote.isNoteDeleted) {
+                    isNoteDeleted = false
+                    notes[index] = note
+                }
             }
         if (!isThereNoteIdInNotes) {
-            throw TargetNotFoundException("there is no Note that should be edited")
-        }
+            throw TargetNotFoundException("there is no Note that should be edited or note deleted.")
+        } else if (isNoteDeleted) throw TargetDeletedException("Note")
     }
 
     override fun read(): List<NoteAttachment> {
@@ -48,14 +54,18 @@ object NoteService: CredService<NoteAttachment> {
             if (eachNote.id == id) {
                 noteToReturn = notes[index]
             }
-        return noteToReturn ?: throw TargetNotFoundException("there is no Note to return")
+        return noteToReturn ?:
+        throw TargetNotFoundException("There is no Note to return.")
     }
 
     override fun restore(id: Long) {
+        var isNoteToRestoreInNotes = false
         for ((index, eachNote) in notes.withIndex())
             if (eachNote.id == id) {
                 notes[index] = (notes[index]).copy(isNoteDeleted = false)
-            } else
-                throw TargetNotFoundException("there is no Note that should be restore")
+                isNoteToRestoreInNotes = true
+            }
+        if (!isNoteToRestoreInNotes)
+            throw TargetNotFoundException("there is no Note that should be restore")
     }
 }

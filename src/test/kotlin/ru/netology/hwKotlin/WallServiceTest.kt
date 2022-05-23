@@ -2,6 +2,7 @@ package ru.netology.hwKotlin
 
 import org.junit.Test
 import org.junit.Assert.*
+import ru.netology.hwKotlin.exceptions.TargetNotFoundException
 
 class WallServiceTest {
 

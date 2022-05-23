@@ -1,12 +1,14 @@
 package ru.netology.hwKotlin
 
+import ru.netology.hwKotlin.exceptions.TargetNotFoundException
+
 object WallService {
     private var posts = emptyArray<Post>()
-    private var lastPostID = 0
+    private var lastPostID = 0L
     private var comments = emptyArray<Comment>()
 
     fun add(post: Post): Post {
-        if (lastPostID != 0) lastPostID += 1 else lastPostID = 1
+        if (lastPostID != 0L) lastPostID += 1 else lastPostID = 1
         val nextId =  lastPostID
         val identifiedPost = post.copy(id = nextId)
         posts += identifiedPost

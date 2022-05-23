@@ -5,6 +5,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import ru.netology.hwKotlin.attachments.NoteAttachment
+import ru.netology.hwKotlin.exceptions.TargetDeletedException
+import ru.netology.hwKotlin.exceptions.TargetNotFoundException
 import java.util.*
 
 class NoteServiceTest {
@@ -58,6 +60,8 @@ class NoteServiceTest {
         val addResult = NoteService.add(testNote)
 
         NoteService.delete(addResult)
+
+        assert(NoteService.getById(addResult).isNoteDeleted)
     }
     @Test(expected = TargetNotFoundException::class)
     fun deleteNoteShouldThrow() {
@@ -75,11 +79,19 @@ class NoteServiceTest {
         NoteService.edit(NoteService.getById(addResult).copy(text = "some edit text of note"))
     }
     @Test(expected = TargetNotFoundException::class)
-    fun editNoteShouldThrow() {
+    fun editNoteShouldThrowTargetNotFoundException() {
+        val testNote = testNote
+        NoteService.add(testNote)
+
+        NoteService.edit(testNote.copy(id = 0L))
+    }
+    @Test(expected = TargetDeletedException::class)
+    fun editNoteShouldThrowTargetDeletedException() {
         val testNote = testNote
         val addResult = NoteService.add(testNote)
+        NoteService.delete(addResult)
 
-        NoteService.edit(NoteService.getById(addResult).copy(id = 0L))
+        NoteService.edit(testNote.copy(id = addResult))
     }
 
     @Test
@@ -91,8 +103,8 @@ class NoteServiceTest {
         val readResult = NoteService.read()
         if (readResult is List) typeIsRight = true
 
-        assertEquals(addResult, readResult.last{it.id == addResult})
-        assertEquals(true, typeIsRight)
+        assertEquals(testNote.copy(id = addResult), readResult.last{it.id == addResult})
+        assert(typeIsRight)
     }
 
     @Test
@@ -100,12 +112,12 @@ class NoteServiceTest {
         val testNote = testNote
         val addResult = NoteService.add(testNote)
 
-        val getByIdResult = NoteService.getById(addResult)
+        val getNoteByIdResult = NoteService.getById(addResult)
 
-        assertEquals(addResult, getByIdResult.id)
+        assertEquals(addResult, getNoteByIdResult.id)
     }
     @Test(expected = TargetNotFoundException::class)
-    fun getNoteByIdShouldThrow() {
+    fun getNoteByIdShouldThrowTargetNotFoundException() {
         val testNote = testNote
         NoteService.add(testNote)
 
@@ -119,7 +131,7 @@ class NoteServiceTest {
 
         NoteService.restore(addResult)
 
-        assertEquals(false, (NoteService.getById(addResult)).isNoteDeleted)
+        assert(!NoteService.getById(addResult).isNoteDeleted)
     }
     @Test(expected = TargetNotFoundException::class)
     fun restoreNoteShouldThrow() {
@@ -138,6 +150,7 @@ class NoteServiceTest {
         val addCommentTestResult = CommentService.add(testComment)
 
         assertNotEquals(0L, addCommentTestResult)
+        assert(CommentService.read().contains(testComment.copy(id = addCommentTestResult)))
     }
     @Test(expected = TargetNotFoundException::class)
     fun addCommentShouldThrow() {
@@ -147,92 +160,123 @@ class NoteServiceTest {
         CommentService.add(testComment)
     }
 
-
-
-
-
-    @Test
-    fun createComment(){
-        val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-
-        val createCommentResult = NoteService.createComment(testComment)
-
-        assertNotEquals(0, createCommentResult.id)
-    }
-    @Test(expected = TargetNotFoundException::class)
-    fun createCommentShouldThrow() {
-        val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-
-        NoteService.createComment(testComment.copy(targetId = 0))
-    }
-
     @Test
     fun deleteComment(){
-        val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-        val createCommentResult = NoteService.createComment(testComment)
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+        val addCommentResult = CommentService.add(testComment)
 
-        NoteService.deleteComment(createCommentResult)
+        CommentService.delete(addCommentResult)
+
+        assert(CommentService.getById(addCommentResult).isCommentDeleted)
     }
     @Test(expected = TargetNotFoundException::class)
     fun deleteCommentShouldThrow() {
-        val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-        val createCommentResult = NoteService.createComment(testComment)
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+        CommentService.add(testComment)
 
-        NoteService.deleteComment(createCommentResult.copy(id = 0))
+        CommentService.delete(0L)
     }
 
     @Test
     fun editComment(){
         val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-        val createCommentResult = NoteService.createComment(testComment)
+        val testComment = testComment.copy(targetId = addResult)
+        val addCommentResult = CommentService.add(testComment)
+        val commentToEdit = CommentService.getById(addCommentResult).copy(
+            text = "some edit text of Comment"
+        )
 
-        NoteService.editComment(createCommentResult.copy(text = "some edit text of Comment"))
+        CommentService.edit(commentToEdit)
     }
     @Test(expected = TargetNotFoundException::class)
-    fun editCommentShouldThrow() {
+    fun editCommentShouldThrowTargetNotFoundException() {
         val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-        val createCommentResult = NoteService.createComment(testComment)
+        val testComment = testComment.copy(targetId = addResult)
+        CommentService.add(testComment)
 
-        NoteService.editComment(createCommentResult.copy(id = 0))
+        CommentService.edit(testComment.copy(id = 0L))
+    }
+    @Test(expected = TargetDeletedException::class)
+    fun editCommentShouldThrowTargetDeletedException() {
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+        val addCommentResult = CommentService.add(testComment)
+        CommentService.delete(addCommentResult)
+
+        CommentService.edit(testComment.copy(id = addCommentResult))
     }
 
     @Test
-    fun getComments(){
-        val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-        val createCommentResult = NoteService.createComment(testComment)
+    fun readComments(){
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+        val addCommentResult = CommentService.add(testComment)
+        var typeIsRight = false
 
-        val getCommentsResult = NoteService.getComments(addResult)
+        val readCommentsResult = CommentService.read()
+        if (readCommentsResult is List) typeIsRight = true
 
-        assertEquals(createCommentResult,
-            getCommentsResult.last{it.id == createCommentResult.id})
-        assertEquals(1, getCommentsResult.size)
+        assertEquals(testComment.copy(id = addCommentResult),
+            readCommentsResult.last{it.id == addCommentResult})
+        assert(typeIsRight)
+    }
+
+    @Test
+    fun getCommentsByTargetId(){
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+        val addCommentResult = CommentService.add(testComment)
+        var typeIsRight = false
+
+        val getByTargetIdResult = CommentService.getByTargetId(addNoteResult)
+        if (getByTargetIdResult is List) typeIsRight = true
+
+        assertEquals(testComment.copy(id = addCommentResult),
+            getByTargetIdResult.first{it.id == addCommentResult})
+//        assertEquals(1, getByTargetIdResult.size)
+        assert(typeIsRight)
+    }
+
+    @Test
+    fun getCommentById(){
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+        val addCommentResult = CommentService.add(testComment)
+
+        val getCommentByIdResult = CommentService.getById(addCommentResult)
+
+        assertEquals(addCommentResult, getCommentByIdResult.id)
+        assertEquals(getCommentByIdResult, testComment.copy(id = addCommentResult))
+    }
+    @Test(expected = TargetNotFoundException::class)
+    fun getCommentByIdShouldThrowTargetNotFoundException() {
+        val addNoteResult = NoteService.add(testNote)
+        val testComment = testComment.copy(targetId = addNoteResult)
+        CommentService.add(testComment)
+
+        CommentService.getById(0L)
     }
 
     @Test
     fun restoreComment(){
         val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-        val createCommentResult = NoteService.createComment(testComment)
-        NoteService.deleteComment(createCommentResult)
+        val testComment = testComment.copy(targetId = addResult)
+        val addCommentResult = CommentService.add(testComment)
+        CommentService.delete(addCommentResult)
 
-        val restoreCommentResult = NoteService.restoreComment(createCommentResult.id)
+        CommentService.restore(addCommentResult)
 
-        assertEquals(createCommentResult, restoreCommentResult)
+        assert(!CommentService.getById(addCommentResult).isCommentDeleted)
     }
     @Test(expected = TargetNotFoundException::class)
     fun restoreCommentShouldThrow() {
         val addResult = NoteService.add(testNote)
-        val testComment = testComment.copy(targetId = addResult.id)
-        val createCommentResult = NoteService.createComment(testComment)
-        NoteService.deleteComment(createCommentResult)
+        val testComment = testComment.copy(targetId = addResult)
+        val addCommentResult = CommentService.add(testComment)
+        CommentService.delete(addCommentResult)
 
-        NoteService.restoreComment(0)
+        CommentService.restore(0)
     }
 }
