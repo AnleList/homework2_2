@@ -97,13 +97,10 @@ class NoteServiceTest {
     fun readNote(){
         val testNote = testNote
         val addResult = NoteService.add(testNote)
-        var typeIsRight = false
 
         val readResult = NoteService.read()
-        if (readResult is List) typeIsRight = true
 
         assertEquals(testNote.copy(id = addResult), readResult.last{it.id == addResult})
-        assert(typeIsRight)
     }
 
     @Test
@@ -212,14 +209,11 @@ class NoteServiceTest {
         val addNoteResult = NoteService.add(testNote)
         val testComment = testComment.copy(targetId = addNoteResult)
         val addCommentResult = CommentService.add(testComment)
-        var typeIsRight = false
 
         val readCommentsResult = CommentService.read()
-        if (readCommentsResult is List) typeIsRight = true
 
         assertEquals(testComment.copy(id = addCommentResult),
             readCommentsResult.last{it.id == addCommentResult})
-        assert(typeIsRight)
     }
 
     @Test
@@ -227,15 +221,12 @@ class NoteServiceTest {
         val addNoteResult = NoteService.add(testNote)
         val testComment = testComment.copy(targetId = addNoteResult)
         val addCommentResult = CommentService.add(testComment)
-        var typeIsRight = false
 
         val getByTargetIdResult = CommentService.getByTargetId(addNoteResult)
-        if (getByTargetIdResult is List) typeIsRight = true
 
         assertEquals(testComment.copy(id = addCommentResult),
             getByTargetIdResult.first{it.id == addCommentResult})
         assertEquals(1, getByTargetIdResult.size)
-        assert(typeIsRight)
     }
 
     @Test
