@@ -7,13 +7,13 @@ object CommentService: CrudService<Comment>  {
     private var lastCommentID = 0L
     private val comments = mutableListOf<Comment>()
 
-    override fun add(comment: Comment): Long {
+    override fun add(entity: Comment): Long {
         lateinit var identifiedComment: Comment
         var isCommentTargetIdInNotes = false
         for (eachNote in NoteService.read())
-            if (eachNote.id == comment.targetId) {
+            if (eachNote.id == entity.targetId) {
                 lastCommentID += 1L
-                identifiedComment = comment.copy(id = lastCommentID)
+                identifiedComment = entity.copy(id = lastCommentID)
                 comments += identifiedComment
                 isCommentTargetIdInNotes = true
             }
@@ -33,15 +33,15 @@ object CommentService: CrudService<Comment>  {
         }
     }
 
-    override fun edit(comment: Comment) {
+    override fun edit(entity: Comment) {
         var isThereCommentIdInComments = false
         var isCommentDeleted = true
         for ((index, eachComment) in comments.withIndex())
-            if (eachComment.id == comment.id) {
+            if (eachComment.id == entity.id) {
                 isThereCommentIdInComments = true
                 if (!eachComment.isCommentDeleted) {
                     isCommentDeleted = false
-                    comments[index] = comment
+                    comments[index] = entity
                 }
             }
         if (!isThereCommentIdInComments) {
@@ -55,9 +55,9 @@ object CommentService: CrudService<Comment>  {
 
     fun getByTargetId (targetId: Long): List<Comment> {
         val commentsToReturn = mutableListOf<Comment>()
-        for ((index, eachComment) in comments.withIndex())
-            if (eachComment.targetId == targetId || !eachComment.isCommentDeleted) {
-                commentsToReturn.add(comments[index])
+        for (eachComment in comments)
+            if (eachComment.targetId == targetId && !eachComment.isCommentDeleted) {
+                commentsToReturn.add(eachComment)
             }
         return commentsToReturn.toList()
     }

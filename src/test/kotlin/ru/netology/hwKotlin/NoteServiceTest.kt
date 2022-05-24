@@ -1,6 +1,5 @@
 package ru.netology.hwKotlin
 
-import org.junit.Assert.*
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -235,7 +234,7 @@ class NoteServiceTest {
 
         assertEquals(testComment.copy(id = addCommentResult),
             getByTargetIdResult.first{it.id == addCommentResult})
-//        assertEquals(1, getByTargetIdResult.size)
+        assertEquals(1, getByTargetIdResult.size)
         assert(typeIsRight)
     }
 
