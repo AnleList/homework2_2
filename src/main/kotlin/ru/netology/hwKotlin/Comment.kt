@@ -1,9 +1,9 @@
 package ru.netology.hwKotlin
 
 data class Comment(
-    val id: Int,
+    val id: Long,
     val fromID: Int,
-    val postId: Int,
+    val targetId: Long,
     val date: Int,
     val text: String,
     val donut: Donut,
@@ -11,5 +11,24 @@ data class Comment(
     val replyToComment: Int,
     val attachments: Any?,
     val parentsStack: Array<Comment>?,
-    val thread: Any?
-)
+    val thread: Any?,
+    val isCommentDeleted: Boolean
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Comment
+
+        if (parentsStack != null) {
+            if (other.parentsStack == null) return false
+            if (!parentsStack.contentEquals(other.parentsStack)) return false
+        } else if (other.parentsStack != null) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return parentsStack?.contentHashCode() ?: 0
+    }
+}

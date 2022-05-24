@@ -1,7 +1,7 @@
 package ru.netology.hwKotlin
 
 data class Post(
-    val id: Int = 0,
+    val id: Long = 0,
     val ownerId: Int,
     val fromId: Int,
     val createdBy: Int?,
